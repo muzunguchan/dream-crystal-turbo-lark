@@ -1,0 +1,42 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Chromebook Craft",
+      "hasCanvas": false,
+      "bodyTextLen": 96,
+      "bodyTextHash": "b6352aa604bdc75d4eba8baaa736d34b862bd12c276c27b288f0357ec5f889a9",
+      "bodyTextPrefix": "CHROMEBOOK Originele features blijven. Alleen de belasting is la",
+      "horizontalOverflow": false,
+      "consoleErrors": [
+        "EagRuntimeJS: [7:49:52 AM][main/ERROR] Game crashed!",
+        "EagRuntimeJS: [7:49:52 AM][main/ERROR] \nGame Crashed! I have fallen and I can't get up!\n\nNative Browser Exception\n----------------------------------\n  Line: unknown:unknown:unknown\n  Type: TypeError\n  Desc: Cannot set properties of undefined (setting 'position')\n----------------------------------\n\nDeobfuscated stack trace:\n    at TypeError: Cannot set properties of undefined (setting 'position')\n    at Wb (blob:http://127.0.0.1:8080/af2680ea-7c99-4933-8b60-7b28e77319c1:7:406)\n    at async pd (blob:http://127.0.0.1:8080/af2680ea-7c99-4933-8b60-7b28e77319c1:214:232)\n\nThis exception was not handled by the WASM binary\n\n\neaglercraft.version = \"undefined\"\neaglercraft.minecraft = \"undefined\"\neaglercraft.brand = \"undefined\"\n\nwebgl.renderer = ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\nwebgl.vendor = Google Inc. (Google)\nwebgl.ext.ANGLE_instanced_arrays = false\nwebgl.ext.EXT_color_buffer_float = true\nwebgl.ext.EXT_color_buffer_half_float = true\nwebgl.ext.EXT_shader_texture_lod = false\nwebgl.ext.OES_fbo_render_mipmap = false\nwebgl.ext.OES_texture_float = false\nwebgl.ext.OES_texture_float_linear = true\nwebgl.ext.OES_texture_half_float = false\nwebgl.ext.OES_texture_half_float_linear = false\nwebgl.ext.EXT_texture_filter_anisotropic = true\n\nwindow.eaglercraftXOpts = {\"worldsDB\":\"worlds\",\"enforceVSync\":true,\"keepAliveHack\":true,\"finishOnSwap\":false,\"html5CursorSupport\":true,\"allowExperimentalWebGL1\":true,\"useDelayOnSwap\":false,\"relays\":[{\"addr\":\"wss://relay.deev.is/\",\"comment\":\"lax1dude relay #1\",\"primary\":true},{\"addr\":\"wss://relay.lax1dude.net/\",\"comment\":\"lax1dude relay #2\",\"primary\":false},{\"addr\":\"wss://relay.shhnowisnottheti.me/\",\"comment\":\"ayunami relay #1\",\"primary\":false}]}\n\ncurrentTime = 10/15/2026, 7:49:52 AM\n\nwindow.navigator.userAgent = Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36\nwindow.navigator.vendor = Google Inc.\nwindow.navigator.language = en-US\nwindow.navigator.hardwareConcurrency = 2\nwindow.navigator.deviceMemory = 4\nwindow.navigator.platform = Linux x86_64\nwindow.navigator.product = Gecko\nwindow.navigator.plugins = []\n\nwindow.localStorage = [object Storage]\nwindow.sessionStorage = [object Storage]\nwindow.indexedDB = [object IDBFactory]\n\nrootElement.clientWidth = 1280\nrootElement.clientHeight = 800\nwindow.innerWidth = 1280\nwindow.innerHeight = 800\nwindow.outerWidth = 1280\nwindow.outerHeight = 800\nwindow.devicePixelRatio = 1\nwindow.screen.availWidth = 1280\nwindow.screen.availHeight = 800\nwindow.screen.colorDepth = 24\nwindow.screen.pixelDepth = 24\n\nwindow.location.href = http://127.0.0.1:8080/play.html?scale=fast\n\n"
+      ],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Chromebook Craft",
+      "hasCanvas": false,
+      "bodyTextLen": 96,
+      "bodyTextHash": "b6352aa604bdc75d4eba8baaa736d34b862bd12c276c27b288f0357ec5f889a9",
+      "bodyTextPrefix": "CHROMEBOOK Originele features blijven. Alleen de belasting is la",
+      "horizontalOverflow": false,
+      "consoleErrors": [
+        "EagRuntimeJS: [7:49:57 AM][main/ERROR] Game crashed!",
+        "EagRuntimeJS: [7:49:57 AM][main/ERROR] \nGame Crashed! I have fallen and I can't get up!\n\nNative Browser Exception\n----------------------------------\n  Line: unknown:unknown:unknown\n  Type: TypeError\n  Desc: Cannot set properties of undefined (setting 'position')\n----------------------------------\n\nDeobfuscated stack trace:\n    at TypeError: Cannot set properties of undefined (setting 'position')\n    at Wb (blob:http://127.0.0.1:8080/1fc22b06-38be-4d2f-9075-d6b5c21b5148:7:406)\n    at async pd (blob:http://127.0.0.1:8080/1fc22b06-38be-4d2f-9075-d6b5c21b5148:214:232)\n\nThis exception was not handled by the WASM binary\n\n\neaglercraft.version = \"undefined\"\neaglercraft.minecraft = \"undefined\"\neaglercraft.brand = \"undefined\"\n\nwebgl.renderer = ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\nwebgl.vendor = Google Inc. (Google)\nwebgl.ext.ANGLE_instanced_arrays = false\nwebgl.ext.EXT_color_buffer_float = true\nwebgl.ext.EXT_color_buffer_half_float = true\nwebgl.ext.EXT_shader_texture_lod = false\nwebgl.ext.OES_fbo_render_mipmap = false\nwebgl.ext.OES_texture_float = false\nwebgl.ext.OES_texture_float_linear = true\nwebgl.ext.OES_texture_half_float = false\nwebgl.ext.OES_texture_half_float_linear = false\nwebgl.ext.EXT_texture_filter_anisotropic = true\n\nwindow.eaglercraftXOpts = {\"worldsDB\":\"worlds\",\"enforceVSync\":true,\"keepAliveHack\":true,\"finishOnSwap\":false,\"html5CursorSupport\":true,\"allowExperimentalWebGL1\":true,\"useDelayOnSwap\":false,\"relays\":[{\"addr\":\"wss://relay.deev.is/\",\"comment\":\"lax1dude relay #1\",\"primary\":true},{\"addr\":\"wss://relay.lax1dude.net/\",\"comment\":\"lax1dude relay #2\",\"primary\":false},{\"addr\":\"wss://relay.shhnowisnottheti.me/\",\"comment\":\"ayunami relay #1\",\"primary\":false}]}\n\ncurrentTime = 10/15/2026, 7:49:57 AM\n\nwindow.navigator.userAgent = Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/156.0.8078.4 Safari/537.36\nwindow.navigator.vendor = Google Inc.\nwindow.navigator.language = en-US\nwindow.navigator.hardwareConcurrency = 2\nwindow.navigator.deviceMemory = 4\nwindow.navigator.platform = Linux x86_64\nwindow.navigator.product = Gecko\nwindow.navigator.plugins = []\n\nwindow.localStorage = [object Storage]\nwindow.sessionStorage = [object Storage]\nwindow.indexedDB = [object IDBFactory]\n\nrootElement.clientWidth = 390\nrootElement.clientHeight = 844\nwindow.innerWidth = 390\nwindow.innerHeight = 844\nwindow.outerWidth = 390\nwindow.outerHeight = 844\nwindow.devicePixelRatio = 1\nwindow.screen.availWidth = 390\nwindow.screen.availHeight = 844\nwindow.screen.colorDepth = 24\nwindow.screen.pixelDepth = 24\n\nwindow.location.href = http://127.0.0.1:8080/play.html?scale=fast\n\n"
+      ],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

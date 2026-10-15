@@ -1,0 +1,68 @@
+</style>
+<script src="eagler-boot.js"></script>
+<script>
+"use strict";
+document.addEventListener("DOMContentLoaded", function () {
+  var params = new URLSearchParams(location.search);
+  var scale = params.get("scale") === "sharp" ? "sharp" : "fast";
+
+  if (scale === "fast") {
+    try {
+      Object.defineProperty(window, "devicePixelRatio", {
+        configurable: true,
+        get: function () { return 1; }
+      });
+    } catch (e) {}
+  }
+
+  var proto = HTMLCanvasElement.prototype;
+  var orig = proto.getContext;
+  if (!orig.__crosWrapped) {
+    var wrapped = function (type, attrs) {
+      if (typeof type === "string" && type.indexOf("webgl") !== -1) {
+        var next = {};
+        if (attrs && typeof attrs === "object") {
+          for (var k in attrs) next[k] = attrs[k];
+        }
+        next.powerPreference = "high-performance";
+        next.desynchronized = true;
+        next.failIfMajorPerformanceCaveat = false;
+        if (scale === "fast" && next.antialias === undefined) next.antialias = false;
+        return orig.call(this, type, next);
+      }
+      return orig.apply(this, arguments);
+    };
+    wrapped.__crosWrapped = true;
+    proto.getContext = wrapped;
+  }
+
+  if (navigator.storage && navigator.storage.persist) {
+    navigator.storage.persist().catch(function () {});
+  }
+
+  var relayId = Math.floor(Math.random() * 3);
+  window.eaglercraftXOpts = {
+    container: "game_frame",
+    worldsDB: "worlds",
+    assetsURI: "client.epw",
+    enforceVSync: true,
+    keepAliveHack: true,
+    finishOnSwap: false,
+    html5CursorSupport: true,
+    allowExperimentalWebGL1: true,
+    useDelayOnSwap: false,
+    relays: [
+      { addr: "wss://relay.deev.is/", comment: "lax1dude relay #1", primary: relayId === 0 },
+      { addr: "wss://relay.lax1dude.net/", comment: "lax1dude relay #2", primary: relayId === 1 },
+      { addr: "wss://relay.shhnowisnottheti.me/", comment: "ayunami relay #1", primary: relayId === 2 }
+    ]
+  };
+
+  window.main();
+});
+</script>
+</head>
+<body id="game_frame">
+<p id="boot-note">Chromebook-modus<span>Zelfde werelden, servers en instellingen · lichter geheugen</span></p>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#121410" />
+<title>1.20.6 Chromebook</title>
+<link rel="preload" href="client.epw" as="fetch" crossorigin="anonymous" />
+<style>
+  html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: #121410;
+    overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  #game_frame {
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    background: #121410;
+  }
+  #boot-note {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 42%;
+    margin: 0;
+    text-align: center;
+    font-family: "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+    color: #e7f0df;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+  }
+  #boot-note span {
+    display: block;
+    margin-top: 6px;
+    color: #9aa892;
+    font-size: 12px;
+  }
+</style>
+</head>
+<body id="game_frame">
+<p id="boot-note">Chromebook-modus<span>Zelfde werelden, servers en instellingen · lichter geheugen</span></p>
+<script src="eagler-boot.js"></script>
+<script>
+"use strict";
+(function () {
+  var params = new URLSearchParams(location.search);
+  var scale = params.get("scale") === "sharp" ? "sharp" : "fast";
+
+  if (scale === "fast") {
+    try {
+      Object.defineProperty(window, "devicePixelRatio", {
+        configurable: true,
+        get: function () { return 1; }
+      });
+    } catch (e) {}
+  }
+
+  var proto = HTMLCanvasElement.prototype;
+  var orig = proto.getContext;
+  if (!orig.__crosWrapped) {
+    var wrapped = function (type, attrs) {
+      if (typeof type === "string" && type.indexOf("webgl") !== -1) {
+        var next = {};
+        if (attrs && typeof attrs === "object") {
+          for (var k in attrs) next[k] = attrs[k];
+        }
+        next.powerPreference = "high-performance";
+        next.desynchronized = true;
+        next.failIfMajorPerformanceCaveat = false;
+        if (scale === "fast" && next.antialias === undefined) next.antialias = false;
+        return orig.call(this, type, next);
+      }
+      return orig.apply(this, arguments);
+    };
+    wrapped.__crosWrapped = true;
+    proto.getContext = wrapped;
+  }
+
+  if (navigator.storage && navigator.storage.persist) {
+    navigator.storage.persist().catch(function () {});
+  }
+
+  var relayId = Math.floor(Math.random() * 3);
+  window.eaglercraftXOpts = {
+    container: "game_frame",
+    worldsDB: "worlds",
+    assetsURI: "client.epw",
+    enforceVSync: true,
+    keepAliveHack: true,
+    finishOnSwap: false,
+    html5CursorSupport: true,
+    allowExperimentalWebGL1: true,
+    useDelayOnSwap: false,
+    relays: [
+      { addr: "wss://relay.deev.is/", comment: "lax1dude relay #1", primary: relayId === 0 },
+      { addr: "wss://relay.lax1dude.net/", comment: "lax1dude relay #2", primary: relayId === 1 },
+      { addr: "wss://relay.shhnowisnottheti.me/", comment: "ayunami relay #1", primary: relayId === 2 }
+    ]
+  };
+
+  var nativeAlert = window.alert.bind(window);
+  window.alert = function (msg) {
+    var note = document.getElementById("boot-note");
+    if (note) {
+      note.hidden = false;
+      note.textContent = String(msg);
+    }
+    if (typeof console !== "undefined") console.warn(String(msg));
+    else nativeAlert(msg);
+  };
+
+  window.main();
+})();
+</script>
+</body>
+</html>
