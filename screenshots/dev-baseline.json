@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Chromebook Craft",
+      "hasCanvas": false,
+      "bodyTextLen": 96,
+      "bodyTextHash": "b6352aa604bdc75d4eba8baaa736d34b862bd12c276c27b288f0357ec5f889a9",
+      "bodyTextPrefix": "CHROMEBOOK Originele features blijven. Alleen de belasting is la",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Chromebook Craft",
+      "hasCanvas": false,
+      "bodyTextLen": 96,
+      "bodyTextHash": "b6352aa604bdc75d4eba8baaa736d34b862bd12c276c27b288f0357ec5f889a9",
+      "bodyTextPrefix": "CHROMEBOOK Originele features blijven. Alleen de belasting is la",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

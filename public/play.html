@@ -1,3 +1,48 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#121410" />
+<title>1.20.6 Chromebook</title>
+<link rel="preload" href="client.epw" as="fetch" crossorigin="anonymous" />
+<style>
+  html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: #121410;
+    overflow: hidden;
+    touch-action: none;
+    overscroll-behavior: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  #game_frame {
+    width: 100%;
+    height: 100%;
+    height: 100dvh;
+    background: #121410;
+  }
+  #boot-note {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 42%;
+    margin: 0;
+    text-align: center;
+    font-family: "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+    color: #e7f0df;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+  }
+  #boot-note span {
+    display: block;
+    margin-top: 6px;
+    color: #9aa892;
+    font-size: 12px;
+  }
 </style>
 <script src="eagler-boot.js"></script>
 <script>
@@ -5,8 +50,9 @@
 document.addEventListener("DOMContentLoaded", function () {
   var params = new URLSearchParams(location.search);
   var scale = params.get("scale") === "sharp" ? "sharp" : "fast";
+  var raw = params.get("raw") === "1";
 
-  if (scale === "fast") {
+  if (!raw && scale === "fast") {
     try {
       Object.defineProperty(window, "devicePixelRatio", {
         configurable: true,
@@ -17,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   var proto = HTMLCanvasElement.prototype;
   var orig = proto.getContext;
-  if (!orig.__crosWrapped) {
+  if (!raw && !orig.__crosWrapped) {
     var wrapped = function (type, attrs) {
       if (typeof type === "string" && type.indexOf("webgl") !== -1) {
         var next = {};
@@ -25,9 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
           for (var k in attrs) next[k] = attrs[k];
         }
         next.powerPreference = "high-performance";
-        next.desynchronized = true;
         next.failIfMajorPerformanceCaveat = false;
-        if (scale === "fast" && next.antialias === undefined) next.antialias = false;
         return orig.call(this, type, next);
       }
       return orig.apply(this, arguments);
@@ -41,22 +85,25 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   var relayId = Math.floor(Math.random() * 3);
-  window.eaglercraftXOpts = {
+  var opts = {
     container: "game_frame",
     worldsDB: "worlds",
     assetsURI: "client.epw",
-    enforceVSync: true,
-    keepAliveHack: true,
-    finishOnSwap: false,
-    html5CursorSupport: true,
-    allowExperimentalWebGL1: true,
-    useDelayOnSwap: false,
     relays: [
       { addr: "wss://relay.deev.is/", comment: "lax1dude relay #1", primary: relayId === 0 },
       { addr: "wss://relay.lax1dude.net/", comment: "lax1dude relay #2", primary: relayId === 1 },
       { addr: "wss://relay.shhnowisnottheti.me/", comment: "ayunami relay #1", primary: relayId === 2 }
     ]
   };
+  if (!raw) {
+    opts.enforceVSync = true;
+    opts.keepAliveHack = true;
+    opts.finishOnSwap = false;
+    opts.html5CursorSupport = true;
+    opts.allowExperimentalWebGL1 = true;
+    opts.useDelayOnSwap = false;
+  }
+  window.eaglercraftXOpts = opts;
 
   window.main();
 });
