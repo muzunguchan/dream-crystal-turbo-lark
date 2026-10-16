@@ -1,89 +1,84 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { ensureBoot, readScale, subscribeBoot, writeScale, type Scale } from "@/lib/boot-game";
 
 export const Route = createFileRoute("/")({ component: Home });
 
-const SCALE_KEY = "cros-pixel-scale";
-
-type Scale = "fast" | "sharp";
-
-function readScale(): Scale {
-  try {
-    return localStorage.getItem(SCALE_KEY) === "sharp" ? "sharp" : "fast";
-  } catch {
-    return "fast";
-  }
-}
-
-function playSrc(scale: Scale): string {
-  const match = window.location.pathname.match(/^\/hds-[a-z0-9]+-\d+-[a-z0-9]+/i);
-  const base = match ? match[0] : "";
-  return `${base}/play.html?scale=${scale}`;
-}
-
 function Home() {
   const [scale, setScale] = useState<Scale>("fast");
-  const [src, setSrc] = useState<string | null>(null);
+  const [label, setLabel] = useState("Spel laden…");
+  const [pct, setPct] = useState(0);
+  const [ready, setReady] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const next = readScale();
     setScale(next);
-    setSrc(playSrc(next));
+    const frame = document.getElementById("game_frame");
+    const observer = new MutationObserver(() => {
+      if (frame?.querySelector("canvas")) {
+        setReady(true);
+        observer.disconnect();
+      }
+    });
+    if (frame) observer.observe(frame, { childList: true, subtree: true });
+    const unsubscribe = subscribeBoot((state) => {
+      setPct(state.pct);
+      setLabel(state.label);
+      setError(state.error);
+    });
+    ensureBoot(next).catch(() => {
+      /* shown via subscribeBoot */
+    });
+
+    return () => {
+      unsubscribe();
+      observer.disconnect();
+    };
   }, []);
 
   function choose(next: Scale) {
-    try {
-      localStorage.setItem(SCALE_KEY, next);
-    } catch {
-      /* private mode */
-    }
-    setScale(next);
-    setSrc(playSrc(next));
+    writeScale(next);
+    window.location.reload();
   }
 
   function goFullscreen() {
-    const frame = document.getElementById("play-frame") as HTMLIFrameElement | null;
-    const target = frame ?? document.documentElement;
-    const req = target.requestFullscreen?.bind(target);
-    if (req) void req();
+    const target = document.getElementById("game_frame") ?? document.documentElement;
+    void target.requestFullscreen?.();
   }
 
   return (
     <main className="shell">
-      {src ? (
-        <iframe
-          id="play-frame"
-          className="play"
-          title="1.20.6"
-          src={src}
-          allow="autoplay; fullscreen; pointer-lock; gamepad"
-          allowFullScreen
-        />
-      ) : (
-        <p className="boot">Chromebook-modus laden…</p>
+      <div id="game_frame" className="frame" />
+      {!ready && (
+        <div className="status">
+          <div className="status-card">
+            <p className="kicker">Chromebook</p>
+            <p className="status-label">{error ?? label}</p>
+            {!error && (
+              <div className="bar">
+                <div className="bar-fill" style={{ width: `${pct}%` }} />
+              </div>
+            )}
+            <p className="hint">
+              {error
+                ? "Ververs de pagina en probeer opnieuw."
+                : "Daarna klik je op Singleplayer in het menu."}
+            </p>
+          </div>
+        </div>
       )}
       <div className="dock">
-        <div className="dock-copy">
-          <p className="kicker">Chromebook</p>
-          <p className="hint">Originele features blijven. Alleen de belasting is lager.</p>
-        </div>
+        <p className="kicker">Beeld</p>
         <div className="dock-actions">
-          <button
-            type="button"
-            className={scale === "fast" ? "on" : ""}
-            onClick={() => choose("fast")}
-          >
+          <button type="button" className={scale === "fast" ? "on" : ""} onClick={() => choose("fast")}>
             Snel
           </button>
-          <button
-            type="button"
-            className={scale === "sharp" ? "on" : ""}
-            onClick={() => choose("sharp")}
-          >
+          <button type="button" className={scale === "sharp" ? "on" : ""} onClick={() => choose("sharp")}>
             Scherp
           </button>
           <button type="button" onClick={goFullscreen}>
-            Volledig scherm
+            Volledig
           </button>
         </div>
       </div>
